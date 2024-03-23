@@ -31,4 +31,8 @@ export class JadwalAjarQuery extends DbService {
     async updateById(id: string, payload: UpdateJadwalAjarDto) {
         return await this.prisma.jadwalAjar.update({ where: { id }, data: payload })
     }
+
+    async deleteById(id: string) {
+        return await this.prisma.jadwalAjar.delete({ where: { id } })
+    }
 }

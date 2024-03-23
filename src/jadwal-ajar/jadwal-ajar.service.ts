@@ -26,4 +26,8 @@ export class JadwalAjarService {
     async updateById(token: string, id: string, dto: UpdateJadwalAjarDto) {
         return await this.jadwalAjarRepository.updateById(token, id, dto);
     }
+
+    async deleteById(token: string, id: string) {
+        return await this.jadwalAjarRepository.deleteById(token, id);
+    }
 }

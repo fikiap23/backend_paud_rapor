@@ -58,4 +58,12 @@ export class JadwalAjarRepository {
         if (dto.hari && dto.hari !== jadwalAjar.hari) await this.checkIsHariHasUsed(dto.idModulAjar, dto.hari);
         return await this.jadwalAjarQuery.updateById(id, dto);
     }
+
+    async deleteById(token: string, id: string) {
+        const jadwalAjar = await this.findByIdOrThrow(id);
+        // get decode payload jwt token
+        const { idsRombel } = (await this.authRepository.decodeJwtToken(token)) as PayloadToken;
+        if (jadwalAjar.idRombel !== idsRombel[0]) throw new BadRequestException('Akun tidak terdaftar di rombel ini');
+        return await this.jadwalAjarQuery.deleteById(id);
+    }
 }
