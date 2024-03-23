@@ -8,10 +8,20 @@ import { RombelModule } from './rombel/rombel.module';
 import { MuridModule } from './murid/murid.module';
 import { MapelModule } from './mapel/mapel.module';
 import { ModulAjarModule } from './modul-ajar/modul-ajar.module';
-
+import { JadwalAjarModule } from './jadwal-ajar/jadwal-ajar.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, GuruModule, UserModule, RombelModule, MuridModule, MapelModule, ModulAjarModule],
+  imports: [
+    AuthModule,
+    PrismaModule,
+    GuruModule,
+    UserModule,
+    RombelModule,
+    MuridModule,
+    MapelModule,
+    ModulAjarModule,
+    JadwalAjarModule,
+  ],
   controllers: [],
   providers: [],
 })

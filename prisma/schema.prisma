@@ -53,6 +53,16 @@ enum Nilai {
   SUDAH_BERKEMBANG
 }
 
+enum HariType {
+  SENIN
+  SELASA
+  RABU
+  KAMIS
+  JUMAT
+  SABTU
+  MINGGU
+}
+
 // /*
 // |--------------------------------------------------------------------------
 // | Model
@@ -134,7 +144,8 @@ model Rombel {
   kategoriRombel   KategoriRombel @relation(fields: [idKategoriRombel], references: [id])
   rapor            Rapor[]
   murid            Murid[]
-  ModulAjar        ModulAjar[]
+  modulAjar        ModulAjar[]
+  jadwalAjar       JadwalAjar[]
 
   // index
   @@index([id, idGuru, idKategoriRombel])
@@ -190,16 +201,18 @@ model Mapel {
 
 model JadwalAjar {
   id           String   @id @default(uuid())
-  hari         String
+  hari         HariType
   tanggal      DateTime
   kegiatanInti String
 
   // Relation
   idModulAjar String
-  modulAjar   ModulAjar @relation(fields: [idModulAjar], references: [id])
+  modulAjar   ModulAjar @relation(fields: [idModulAjar], references: [id], onDelete: Cascade)
+  idRombel    String
+  rombel      Rombel    @relation(fields: [idRombel], references: [id], onDelete: Cascade)
 
   // index
-  @@index([id, idModulAjar])
+  @@index([id, idModulAjar, idRombel])
 }
 
 model PenilaianMingguan {

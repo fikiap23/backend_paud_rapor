@@ -13,6 +13,10 @@ export class ModulAjarQuery extends DbService {
         return await this.prisma.modulAjar.findUnique({ where: { id } })
     }
 
+    async findByIdAndRombel(id: string, idRombel: string) {
+        return await this.prisma.modulAjar.findUnique({ where: { id, idRombel } })
+    }
+
     async checkIsMingguHasUsed(minggu: number, idMapel: string, idRombel: string): Promise<boolean> {
         const isMingguHasUsed = await this.prisma.modulAjar.findFirst({ where: { minggu, idMapel, idRombel } })
         return isMingguHasUsed ? true : false

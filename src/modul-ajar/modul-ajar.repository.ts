@@ -24,6 +24,12 @@ export class ModulAjarRepository {
         return modulAjar
     }
 
+    async findByIdAndRombelOrThrow(id: string, idRombel: string) {
+        const modulAjar = await this.modulAjarQuery.findByIdAndRombel(id, idRombel);
+        if (!modulAjar) throw new BadRequestException('Modul Ajar tidak ditemukan');
+        return modulAjar
+    }
+
     async checkIsMingguHasUsed(minggu: number, idMapel: string, idRombel: string) {
         ;
         const modulAjar = await this.modulAjarQuery.checkIsMingguHasUsed(minggu, idMapel, idRombel);
