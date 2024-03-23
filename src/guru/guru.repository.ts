@@ -5,6 +5,7 @@ import { CreateUserDto } from '../auth/dto/create-user.dto';
 import CreateGuruDto from './dto/create-guru.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { RoleEnum } from '../helpers/helper';
+import { UpdateGuruDto } from './dto/update-guru.dto';
 
 
 
@@ -47,6 +48,23 @@ export class GuruRepository {
         const guru = await this.guruQuery.findByNip(nip);
         if (guru) throw new BadRequestException('Guru sudah terdaftar');
         return null
+    }
+
+    async findGuruByIdOrThrow(id: string) {
+        const guru = await this.guruQuery.findById(id);
+        if (!guru) throw new BadRequestException('Guru tidak ditemukan');
+        return guru
+    }
+
+    async updateByAdmin(id: string, dto: UpdateGuruDto) {
+        // check guru exist
+        await this.findGuruByIdOrThrow(id);
+
+        // check nip exist
+        const nipGuru = await this.guruQuery.findByNip(dto.nip);
+        if (nipGuru && nipGuru.id !== id) throw new BadRequestException('NIP sudah terdaftar');
+
+        return await this.guruQuery.updateById(id, dto)
     }
 
 

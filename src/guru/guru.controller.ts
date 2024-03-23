@@ -10,6 +10,7 @@ import {
     Delete,
     Query,
     UseGuards,
+    Req,
 } from '@nestjs/common';
 import { JwtGuard, RoleGuard } from '../auth/guard';
 import { Role } from '@prisma/client';
@@ -27,7 +28,24 @@ export class GuruController {
     @UseGuards(JwtGuard, RoleGuard)
     @Roles(Role.ADMIN)
     async create(@Body() dto: CreateGuruDto, @Res() res) {
-        await this.guruService.create(dto);
-        return this.httpHelper.formatResponse(res, HttpStatus.CREATED, {});
+        const result = await this.guruService.create(dto);
+        return this.httpHelper.formatResponse(res, HttpStatus.CREATED, result);
     }
+
+    @Put('bypass/:id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async updateByAdmin(@Param('id') id: string, @Body() dto: CreateGuruDto, @Res() res) {
+        const result = await this.guruService.updateByAdmin(id, dto);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
+    @Put(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async update(@Param('id') id: string, @Body() dto: CreateGuruDto, @Res() res, @Req() req) {
+
+    }
+
+
 }
