@@ -52,4 +52,9 @@ export class MuridRepository {
         return await this.muridQuery.updateById(id, dto)
     }
 
+    async deleteById(id: string) {
+        const murid = await this.findByIdOrThrow(id);
+        return await this.muridQuery.deleteById(murid.id)
+    }
+
 }

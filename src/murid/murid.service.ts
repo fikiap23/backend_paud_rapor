@@ -15,4 +15,8 @@ export class MuridService {
     async updateById(id: string, dto: UpdateMuridDto) {
         return await this.muridRepository.updateById(id, dto);
     }
+
+    async deleteById(id: string) {
+        return await this.muridRepository.deleteById(id);
+    }
 }

@@ -39,4 +39,12 @@ export class MuridController {
         await this.muridService.updateById(id, dto);
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {});
     }
+
+    @Delete(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async delete(@Res() res, @Param('id') id) {
+        await this.muridService.deleteById(id);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, {});
+    }
 }
