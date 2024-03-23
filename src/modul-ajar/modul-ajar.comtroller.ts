@@ -39,4 +39,12 @@ export class ModulAjarController {
         await this.modulAjarService.updateModulAjar(req.headers.authorization, id, dto)
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
     }
+
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.GURU)
+    @Delete(':id')
+    async delete(@Res() res, @Request() req, @Param('id') id) {
+        await this.modulAjarService.deleteModulAjar(req.headers.authorization, id)
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
+    }
 }

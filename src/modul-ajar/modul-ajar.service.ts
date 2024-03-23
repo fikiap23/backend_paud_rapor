@@ -14,4 +14,8 @@ export class ModulAjarService {
     async updateModulAjar(token: string, id: string, dto: UpdateModulAjarDto) {
         return await this.modulAjarRepository.updateById(token, id, dto)
     }
+
+    async deleteModulAjar(token: string, id: string) {
+        return await this.modulAjarRepository.delete(token, id)
+    }
 }

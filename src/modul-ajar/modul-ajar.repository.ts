@@ -58,4 +58,18 @@ export class ModulAjarRepository {
         if (!modulAjar) throw new BadRequestException('Modul Ajar gagal diupdate');
         return modulAjar
     }
+
+    async delete(token: string, id: string) {
+        // check modul ajar is exist
+        const modulAjar = await this.findByIdOrThrow(id);
+
+        // get decode payload jwt token
+        const { idsRombel } = (await this.authRepository.decodeJwtToken(token)) as PayloadToken;
+
+        if (modulAjar.idRombel !== idsRombel[0]) throw new BadRequestException('Akun tidak terdaftar di rombel ini');
+        // delete modul ajar
+        const isDeleted = await this.modulAjarQuery.deleteById(id);
+        if (!isDeleted) throw new BadRequestException('Modul Ajar gagal dihapus');
+        return isDeleted
+    }
 }

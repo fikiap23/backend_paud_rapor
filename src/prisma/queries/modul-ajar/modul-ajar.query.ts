@@ -25,4 +25,8 @@ export class ModulAjarQuery extends DbService {
     async updateById(id: string, payload: UpdateModulAjarDto) {
         return await this.prisma.modulAjar.update({ where: { id }, data: payload })
     }
+
+    async deleteById(id: string) {
+        return await this.prisma.modulAjar.delete({ where: { id } })
+    }
 }
