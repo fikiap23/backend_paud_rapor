@@ -170,4 +170,22 @@ export class AuthRepository {
             throw error;
         }
     }
+
+    async createUser(dto: CreateUserDto, role: RoleEnum) {
+        // hashing password from body dto
+        const salt = await bcrypt.genSalt();
+        const hash = await bcrypt.hash(dto.password, salt);
+        try {
+            dto.password = hash;
+            dto.role = role
+            // check user exist
+            await this.checkUserExist(dto.username, dto.email);
+
+            const createUser = await this.userQuery.create(dto)
+            if (!createUser) throw new BadRequestException('User gagal ditambahkan');
+            return createUser
+        } catch (error) {
+            throw error;
+        }
+    }
 }
