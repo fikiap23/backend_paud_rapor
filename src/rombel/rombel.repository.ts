@@ -14,25 +14,15 @@ export class RombelRepository {
             // check guru exist
             await this.guruRepository.findGuruByIdOrThrow(dto.idGuru);
         }
-        const kategoriRombel = await this.findKategoriRombelOrThrowById(dto.idKategoriRombel)
-
-        // custom kode
-        const kode = `${kategoriRombel.kode}${dto.tingkatan}`
-        await this.checkKodeExist(kode)
-
-        return await this.rombelQuery.create(dto, kode)
+        // check name and tingkatan rombel exist
+        const rombel = await this.rombelQuery.findRombelByTingkatanAndIdKategoriRombel(dto.idKategoriRombel, dto.tingkatan);
+        if (rombel.length > 0) throw new BadRequestException('Tingkatan Rombel sudah ada');
+        await this.findKategoriRombelOrThrowById(dto.idKategoriRombel)
+        return await this.rombelQuery.create(dto)
     }
 
-    async findByKodeOrThrow(kode: string) {
-        const rombel = await this.rombelQuery.findByKode(kode);
-        if (!rombel) throw new BadRequestException('Rombel tidak ditemukan');
-        return rombel
-    }
-
-    async checkKodeExist(kode: string) {
-        const rombel = await this.rombelQuery.findByKode(kode);
-        if (rombel) throw new BadRequestException('Kode Rombel/Kode sudah ada');
-        return
+    async findAllRombel() {
+        return await this.rombelQuery.findAllRombel()
     }
 
     /*

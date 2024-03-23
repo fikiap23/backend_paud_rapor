@@ -12,6 +12,10 @@ export class RombelService {
         return await this.rombelRepository.createRombel(dto)
     }
 
+    async findAllRombel() {
+        return await this.rombelRepository.findAllRombel()
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Kategori Rombel Service

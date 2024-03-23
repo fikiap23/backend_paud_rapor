@@ -9,14 +9,26 @@ import { UpdatKategoriRombelDto } from '../../../rombel/dto/update-kategori-romb
 @Injectable()
 export class RombelQuery extends DbService {
 
-    async create(payload: CreateRombelDto, kode: string) {
-        return await this.prisma.rombel.create({ data: { ...payload, kode } })
+    async create(payload: CreateRombelDto) {
+        return await this.prisma.rombel.create({ data: payload })
     }
 
-    async findByKode(kode: string) {
-        return await this.prisma.rombel.findUnique({ where: { kode } })
+    async findAllRombel() {
+        return await this.prisma.rombel.findMany({
+            include: {
+                kategoriRombel: true
+            }
+        })
     }
 
+    async findRombelByTingkatanAndIdKategoriRombel(idKategoriRombel: string, tingkatan: number) {
+        return await this.prisma.rombel.findMany({
+            where: {
+                tingkatan,
+                idKategoriRombel: idKategoriRombel
+            }
+        })
+    }
 
     /*
     |--------------------------------------------------------------------------

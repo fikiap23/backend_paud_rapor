@@ -127,7 +127,6 @@ model Rombel {
   id        String @id @default(uuid())
   name      String
   tingkatan Int
-  kode      String @unique
 
   // Relation
   idGuru           String?
@@ -138,7 +137,7 @@ model Rombel {
   murid            Murid[]
 
   // index
-  @@index([id, idGuru, kode, idKategoriRombel])
+  @@index([id, idGuru, idKategoriRombel])
 }
 
 model KategoriRombel {
@@ -146,7 +145,7 @@ model KategoriRombel {
   name         String
   kelompokUsia String
   kode         String   @unique
-  Rombel       Rombel[]
+  rombel       Rombel[]
 
   // index
   @@index([id, kode])

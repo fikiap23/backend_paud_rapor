@@ -38,6 +38,14 @@ export class RombelController {
         return this.httpHelper.formatResponse(res, HttpStatus.CREATED, result);
     }
 
+    @Get()
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async findAllRombel(@Res() res) {
+        const result = await this.rombelService.findAllRombel();
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
 
 
     /*
