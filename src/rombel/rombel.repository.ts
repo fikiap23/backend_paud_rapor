@@ -35,6 +35,10 @@ export class RombelRepository {
     async updateRombelById(id: string, dto: UpdateRombelDto) {
         // check rombel exist
         const existRombel = await this.findRombelByIdOrThrow(id);
+        if (dto.idGuru) {
+            // check guru exist
+            await this.guruRepository.findGuruByIdOrThrow(dto.idGuru);
+        }
         // check name and tingkatan rombel exist
         if (dto.tingkatan && dto.tingkatan !== existRombel.tingkatan) {
             const rombel = await this.rombelQuery.findRombelByTingkatanAndIdKategoriRombel(dto.idKategoriRombel, dto.tingkatan);
