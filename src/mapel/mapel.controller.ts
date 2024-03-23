@@ -47,4 +47,20 @@ export class MapelController {
         await this.mapelService.delete(id);
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {});
     }
+
+    @Get()
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async findAll(@Res() res) {
+        const result = await this.mapelService.findAll();
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
+    @Get(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async findOne(@Res() res, @Param('id') id) {
+        const result = await this.mapelService.findOne(id);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
 }

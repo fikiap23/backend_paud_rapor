@@ -18,4 +18,12 @@ export class MapelService {
     async delete(id: string) {
         return await this.mapelRepository.delete(id)
     }
+
+    async findAll() {
+        return await this.mapelRepository.findAll()
+    }
+
+    async findOne(id: string) {
+        return await this.mapelRepository.findByIdOrThrow(id)
+    }
 }
