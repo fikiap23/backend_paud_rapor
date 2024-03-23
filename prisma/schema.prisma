@@ -82,11 +82,10 @@ model Guru {
   jenisKelamin JenisKelamin
 
   // Relation
-  idUser          String            @unique
-  user            User              @relation(fields: [idUser], references: [id], onDelete: Cascade)
-  rombel          Rombel[]
-  rapor           Rapor[]
-  guruOnModulAjar GuruOnModulAjar[]
+  idUser String   @unique
+  user   User     @relation(fields: [idUser], references: [id], onDelete: Cascade)
+  rombel Rombel[]
+  rapor  Rapor[]
 
   // index
   @@index([id, nip, idUser])
@@ -135,6 +134,7 @@ model Rombel {
   kategoriRombel   KategoriRombel @relation(fields: [idKategoriRombel], references: [id])
   rapor            Rapor[]
   murid            Murid[]
+  ModulAjar        ModulAjar[]
 
   // index
   @@index([id, idGuru, idKategoriRombel])
@@ -151,25 +151,14 @@ model KategoriRombel {
   @@index([id, kode])
 }
 
-model GuruOnModulAjar {
-  id String @id @default(uuid())
-
-  // Relation
-  idGuru      String
-  guru        Guru      @relation(fields: [idGuru], references: [id], onDelete: Cascade)
-  idModulAjar String
-  modulAjar   ModulAjar @relation(fields: [idModulAjar], references: [id], onDelete: Cascade)
-
-  // index
-  @@index([id, idGuru, idModulAjar])
-}
-
 model ModulAjar {
   id                  String              @id @default(uuid())
   minggu              Int
   topik               String
   subtopik            String
   capaianPembelajaran String
+  startDate           DateTime
+  endDate             DateTime
   katakunci           String[]
   tujuanPembelajaran  String[]
   tujuanKegiatan      String[]
@@ -177,11 +166,12 @@ model ModulAjar {
   petaKonsep          String[]
   jadwalAjar          JadwalAjar[]
   penilaianMingguan   PenilaianMingguan[]
-  guruOnModulAjar     GuruOnModulAjar[]
 
   // Relation
-  idMapel String
-  mapel   Mapel  @relation(fields: [idMapel], references: [id])
+  idMapel  String
+  mapel    Mapel  @relation(fields: [idMapel], references: [id])
+  idRombel String
+  rombel   Rombel @relation(fields: [idRombel], references: [id], onDelete: Cascade)
 
   // index
   @@index([id, minggu])
