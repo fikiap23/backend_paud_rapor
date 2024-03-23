@@ -39,7 +39,7 @@ export class GuruQuery extends DbService {
         return await this.prisma.guru.findUnique({
             where: {
                 id
-            }
+            },
         })
     }
 
@@ -93,7 +93,6 @@ export class GuruQuery extends DbService {
                 }
             })
         }
-
-
     }
+
 }

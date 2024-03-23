@@ -7,6 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { RoleEnum } from '../helpers/helper';
 import { UpdateGuruDto } from './dto/update-guru.dto';
 import { GuruQueryDto } from './dto/guru.query.dto';
+import { UserQuery } from '../prisma/queries/user/user.query';
 
 
 
@@ -14,7 +15,7 @@ import { GuruQueryDto } from './dto/guru.query.dto';
 
 @Injectable()
 export class GuruRepository {
-    constructor(private readonly guruQuery: GuruQuery, private readonly authRepository: AuthRepository, private readonly prisma: PrismaService) { }
+    constructor(private readonly guruQuery: GuruQuery, private readonly authRepository: AuthRepository, private readonly userQuery: UserQuery) { }
 
     async create(dto: CreateGuruDto) {
         try {
@@ -72,6 +73,11 @@ export class GuruRepository {
         return this.guruQuery.findAll(dto)
     }
 
+    async deleteByAdmin(id: string) {
+        // check guru exist
+        const guru = await this.findGuruByIdOrThrow(id);
+        return await this.userQuery.delete(guru.idUser)
+    }
 
     /*
       |--------------------------------------------------------------------------

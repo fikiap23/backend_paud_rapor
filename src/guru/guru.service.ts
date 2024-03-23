@@ -23,4 +23,8 @@ export class GuruService {
     async findOne(id: string) {
         return await this.guruRepository.findGuruByIdOrThrow(id)
     }
+
+    async deleteByAdmin(id: string) {
+        return await this.guruRepository.deleteByAdmin(id)
+    }
 }

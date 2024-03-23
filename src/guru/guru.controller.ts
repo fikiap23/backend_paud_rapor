@@ -88,4 +88,19 @@ export class GuruController {
         const result = await this.guruService.findOne(id);
         return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE REQUEST FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    @Delete(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async delete(@Res() res, @Param('id') id: string) {
+        await this.guruService.deleteByAdmin(id);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, {});
+    }
+
 }
