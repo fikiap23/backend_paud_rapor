@@ -8,6 +8,10 @@ import { RombelService } from './rombel.service';
 import { RombelRepository } from './rombel.repository';
 import { RombelQuery } from '../prisma/queries/rombel/rombel.query';
 import { RombelController } from './rombel.controller';
+import { GuruRepository } from '../guru/guru.repository';
+import { AuthRepository } from '../auth/auth.repository';
+import { UserQuery } from '../prisma/queries/user/user.query';
+import { GuruModule } from '../guru/guru.module';
 
 @Module({
     imports: [
@@ -16,6 +20,7 @@ import { RombelController } from './rombel.controller';
         MomentModule,
         ConfigModule,
         HelperModule,
+        GuruModule
     ],
     providers: [RombelService, RombelRepository, RombelQuery],
     controllers: [RombelController],

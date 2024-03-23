@@ -124,20 +124,32 @@ model Murid {
 }
 
 model Rombel {
-  id           String @id @default(uuid())
-  name         String
-  tingkatan    Int
-  kelompokUsia String
-  alias        String
+  id        String @id @default(uuid())
+  name      String
+  tingkatan Int
+  kode      String @unique
 
   // Relation
-  idGuru String
-  guru   Guru    @relation(fields: [idGuru], references: [id])
-  rapor  Rapor[]
-  murid  Murid[]
+  idGuru           String?
+  guru             Guru?          @relation(fields: [idGuru], references: [id])
+  idKategoriRombel String
+  kategoriRombel   KategoriRombel @relation(fields: [idKategoriRombel], references: [id])
+  rapor            Rapor[]
+  murid            Murid[]
 
   // index
-  @@index([id, idGuru])
+  @@index([id, idGuru, kode, idKategoriRombel])
+}
+
+model KategoriRombel {
+  id           String   @id @default(uuid())
+  name         String
+  kelompokUsia String
+  kode         String   @unique
+  Rombel       Rombel[]
+
+  // index
+  @@index([id, kode])
 }
 
 model GuruOnModulAjar {
