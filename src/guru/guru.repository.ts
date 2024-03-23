@@ -6,6 +6,7 @@ import CreateGuruDto from './dto/create-guru.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { RoleEnum } from '../helpers/helper';
 import { UpdateGuruDto } from './dto/update-guru.dto';
+import { GuruQueryDto } from './dto/guru.query.dto';
 
 
 
@@ -65,6 +66,10 @@ export class GuruRepository {
         if (nipGuru && nipGuru.id !== id) throw new BadRequestException('NIP sudah terdaftar');
 
         return await this.guruQuery.updateById(id, dto)
+    }
+
+    findAllGuru(dto: GuruQueryDto) {
+        return this.guruQuery.findAll(dto)
     }
 
 

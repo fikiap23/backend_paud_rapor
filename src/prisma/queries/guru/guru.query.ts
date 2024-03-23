@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DbService } from '../../db.service';
 import CreateGuruDto from '../../../guru/dto/create-guru.dto';
 import { UpdateGuruDto } from '../../../guru/dto/update-guru.dto';
+import { GuruQueryDto } from '../../../guru/dto/guru.query.dto';
 
 
 
@@ -40,5 +41,59 @@ export class GuruQuery extends DbService {
                 id
             }
         })
+    }
+
+    async findAll(dto: GuruQueryDto) {
+        if (!dto.status && !dto.search) {
+            return await this.prisma.guru.findMany({
+                include: {
+                    user: {
+                        select: {
+                            status: true,
+                            email: true,
+                            foto: true,
+                        }
+                    }
+                }
+            })
+        } else {
+            return await this.prisma.guru.findMany({
+                where: {
+                    AND: [
+                        {
+                            OR: [
+                                {
+                                    nip: {
+                                        contains: dto.search
+                                    }
+                                },
+                                {
+                                    nama: {
+                                        contains: dto.search,
+                                        mode: 'insensitive'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            user: {
+                                status: dto.status
+                            }
+                        }
+                    ]
+                },
+                include: {
+                    user: {
+                        select: {
+                            status: true,
+                            email: true,
+                            foto: true,
+                        }
+                    }
+                }
+            })
+        }
+
+
     }
 }

@@ -66,6 +66,7 @@ model User {
   password String
   role     Role       @default(ADMIN)
   status   StatusAkun @default(AKTIF)
+  foto     String?
 
   // Relation
   guru Guru?
@@ -99,23 +100,23 @@ model Murid {
   jenisKelamin      JenisKelamin
   tempatLahir       String
   tanggalLahir      DateTime
-  agama             Agama
-  alamat            String
-  tanggalMasuk      DateTime
-  tinggiBadan       Int
-  beratBadan        Int
-  foto              String
-  namaAyah          String
-  namaIbu           String
-  pekerjaanAyah     String
-  pekerjaanIbu      String
-  status            String
+  agama             Agama?
+  alamat            String?
+  tanggalMasuk      DateTime?
+  tinggiBadan       Int?
+  beratBadan        Int?
+  foto              String?
+  namaAyah          String?
+  namaIbu           String?
+  pekerjaanAyah     String?
+  pekerjaanIbu      String?
+  status            StatusAkun          @default(AKTIF)
   rapor             Rapor?
   penilaianMingguan PenilaianMingguan[]
 
   // Relation
 
-  idRombel String
+  idRombel String?
   rombel   Rombel? @relation(fields: [idRombel], references: [id])
 
   // index
