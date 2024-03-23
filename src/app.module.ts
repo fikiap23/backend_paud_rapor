@@ -3,10 +3,11 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { GuruModule } from './guru/guru.module';
+import { UserModule } from './user/user.module';
 
 
 @Module({
-  imports: [AuthModule, PrismaModule, GuruModule],
+  imports: [AuthModule, PrismaModule, GuruModule, UserModule],
   controllers: [],
   providers: [],
 })
