@@ -8,6 +8,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserQuery } from '../prisma/queries/user/user.query';
+import { use } from 'passport';
+import { Role } from '@prisma/client';
 @Injectable()
 export class AuthRepository {
     constructor(
@@ -59,6 +61,22 @@ export class AuthRepository {
                 throw new BadRequestException('Password salah');
             }
 
+            if (user.role === Role.GURU) {
+                // find guru by user id
+                const guru = await this.prisma.guru.findFirst({ where: { idUser: user.id }, include: { rombel: { select: { id: true } } } });
+                const idsRombel = guru.rombel.map((rombel) => rombel.id);
+                if (!guru) throw new BadRequestException('Akun Guru tidak ditemukan');
+
+                // return token
+                return await this.signJwtToken(
+                    user.id,
+                    user.role,
+                    TokenType.FULL,
+                    '7d',
+                    idsRombel
+                )
+            }
+
             return await this.signJwtToken(
                 user.id,
                 user.role,
@@ -106,6 +124,7 @@ export class AuthRepository {
         role: string,
         access: string,
         expire: string,
+        rombel?: any,
     ): Promise<{ access_token: string }> {
         //  payload user data for jwt token
         const payload: PayloadToken = {
@@ -113,6 +132,7 @@ export class AuthRepository {
             role: role,
             access: access,
             expire: expire,
+            rombel: rombel,
         };
 
         // create token with data payload

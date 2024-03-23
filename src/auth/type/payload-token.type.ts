@@ -4,4 +4,5 @@ export type PayloadToken = {
   role: string;
   access: string;
   expire: string;
+  rombel: any;
 };
