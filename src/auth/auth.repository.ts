@@ -61,7 +61,7 @@ export class AuthRepository {
 
             return await this.signJwtToken(
                 user.id,
-                RoleEnum.ADMIN,
+                user.role,
                 TokenType.FULL,
                 '7d',
             );
@@ -103,7 +103,7 @@ export class AuthRepository {
 
     private async signJwtToken(
         idUser: string,
-        role: RoleEnum,
+        role: string,
         access: string,
         expire: string,
     ): Promise<{ access_token: string }> {
