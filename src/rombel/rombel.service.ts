@@ -3,6 +3,7 @@ import { RombelRepository } from './rombel.repository';
 import { CreateRombelDto } from './dto/create-rombel.dto';
 import { CreateKategoriRombelDto } from './dto/create-kategori-rombel.dto';
 import { UpdatKategoriRombelDto } from './dto/update-kategori-rombel.dto';
+import { UpdateRombelDto } from './dto/update-rombel.dto';
 
 @Injectable()
 export class RombelService {
@@ -18,6 +19,10 @@ export class RombelService {
 
     async findOneRombel(id: string) {
         return await this.rombelRepository.findRombelByIdOrThrow(id)
+    }
+
+    async updateRombel(id: string, dto: UpdateRombelDto) {
+        return await this.rombelRepository.updateRombelById(id, dto)
     }
 
     /*

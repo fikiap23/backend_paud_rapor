@@ -4,6 +4,7 @@ import { CreateRombelDto } from './dto/create-rombel.dto';
 import { GuruRepository } from '../guru/guru.repository';
 import { CreateKategoriRombelDto } from './dto/create-kategori-rombel.dto';
 import { UpdatKategoriRombelDto } from './dto/update-kategori-rombel.dto';
+import { UpdateRombelDto } from './dto/update-rombel.dto';
 
 @Injectable()
 export class RombelRepository {
@@ -29,6 +30,17 @@ export class RombelRepository {
         const rombel = await this.rombelQuery.findRombelById(id);
         if (!rombel) throw new BadRequestException('Rombel tidak ditemukan');
         return rombel
+    }
+
+    async updateRombelById(id: string, dto: UpdateRombelDto) {
+        // check rombel exist
+        const existRombel = await this.findRombelByIdOrThrow(id);
+        // check name and tingkatan rombel exist
+        if (dto.tingkatan && dto.tingkatan !== existRombel.tingkatan) {
+            const rombel = await this.rombelQuery.findRombelByTingkatanAndIdKategoriRombel(dto.idKategoriRombel, dto.tingkatan);
+            if (rombel.length > 0) throw new BadRequestException('Tingkatan Rombel sudah ada');
+        }
+        return await this.rombelQuery.updateRombelById(id, dto)
     }
 
     /*

@@ -3,6 +3,7 @@ import { DbService } from '../../db.service';
 import { CreateRombelDto } from '../../../rombel/dto/create-rombel.dto';
 import { CreateKategoriRombelDto } from '../../../rombel/dto/create-kategori-rombel.dto';
 import { UpdatKategoriRombelDto } from '../../../rombel/dto/update-kategori-rombel.dto';
+import { UpdateRombelDto } from '../../../rombel/dto/update-rombel.dto';
 
 
 
@@ -32,6 +33,10 @@ export class RombelQuery extends DbService {
 
     async findRombelById(id: string) {
         return await this.prisma.rombel.findUnique({ where: { id } })
+    }
+
+    async updateRombelById(id: string, payload: UpdateRombelDto) {
+        return await this.prisma.rombel.update({ where: { id }, data: payload })
     }
 
     /*
