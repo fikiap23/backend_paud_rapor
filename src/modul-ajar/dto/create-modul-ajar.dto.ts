@@ -1,4 +1,4 @@
-import { IsInt, IsString, IsArray, IsDateString, IsNotEmpty } from 'class-validator';
+import { IsInt, IsString, IsArray, IsNotEmpty, IsDate } from 'class-validator';
 
 class CreateModulAjarDto {
     @IsNotEmpty()
@@ -18,11 +18,11 @@ class CreateModulAjarDto {
     capaianPembelajaran: string;
 
     @IsNotEmpty()
-    @IsDateString()
+    @IsDate()
     startDate: Date;
 
     @IsNotEmpty()
-    @IsDateString()
+    @IsDate()
     endDate: Date;
 
     @IsNotEmpty()
@@ -48,10 +48,6 @@ class CreateModulAjarDto {
     @IsNotEmpty()
     @IsString()
     idMapel: string;
-
-    @IsNotEmpty()
-    @IsString()
-    idRombel: string;
 }
 
 export default CreateModulAjarDto;

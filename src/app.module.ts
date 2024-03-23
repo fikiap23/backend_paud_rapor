@@ -7,10 +7,11 @@ import { UserModule } from './user/user.module';
 import { RombelModule } from './rombel/rombel.module';
 import { MuridModule } from './murid/murid.module';
 import { MapelModule } from './mapel/mapel.module';
+import { ModulAjarModule } from './modul-ajar/modul-ajar.module';
 
 
 @Module({
-  imports: [AuthModule, PrismaModule, GuruModule, UserModule, RombelModule, MuridModule, MapelModule],
+  imports: [AuthModule, PrismaModule, GuruModule, UserModule, RombelModule, MuridModule, MapelModule, ModulAjarModule],
   controllers: [],
   providers: [],
 })

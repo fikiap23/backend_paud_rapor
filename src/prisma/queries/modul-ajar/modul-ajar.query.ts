@@ -17,7 +17,7 @@ export class ModulAjarQuery extends DbService {
         return isMingguHasUsed ? true : false
     }
 
-    async create(payload: CreateModulAjarDto) {
-        return await this.prisma.modulAjar.create({ data: payload })
+    async create(idRombel: string, payload: CreateModulAjarDto) {
+        return await this.prisma.modulAjar.create({ data: { ...payload, idRombel } })
     }
 }

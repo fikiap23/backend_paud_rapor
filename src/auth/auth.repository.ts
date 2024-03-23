@@ -124,7 +124,7 @@ export class AuthRepository {
         role: string,
         access: string,
         expire: string,
-        rombel?: any,
+        idsRombel?: any,
     ): Promise<{ access_token: string }> {
         //  payload user data for jwt token
         const payload: PayloadToken = {
@@ -132,7 +132,7 @@ export class AuthRepository {
             role: role,
             access: access,
             expire: expire,
-            rombel: rombel,
+            idsRombel
         };
 
         // create token with data payload
