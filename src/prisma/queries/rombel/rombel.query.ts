@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DbService } from '../../db.service';
 import { CreateRombelDto } from '../../../rombel/dto/create-rombel.dto';
 import { CreateKategoriRombelDto } from '../../../rombel/dto/create-kategori-rombel.dto';
+import { UpdatKategoriRombelDto } from '../../../rombel/dto/update-kategori-rombel.dto';
 
 
 
@@ -33,5 +34,9 @@ export class RombelQuery extends DbService {
 
     async createKategoriRombel(payload: CreateKategoriRombelDto) {
         return await this.prisma.kategoriRombel.create({ data: payload })
+    }
+
+    async updateKategoriRombel(id: string, payload: UpdatKategoriRombelDto) {
+        return await this.prisma.kategoriRombel.update({ where: { id }, data: payload })
     }
 }

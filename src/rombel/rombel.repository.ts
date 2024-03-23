@@ -3,6 +3,7 @@ import { RombelQuery } from '../prisma/queries/rombel/rombel.query';
 import { CreateRombelDto } from './dto/create-rombel.dto';
 import { GuruRepository } from '../guru/guru.repository';
 import { CreateKategoriRombelDto } from './dto/create-kategori-rombel.dto';
+import { UpdatKategoriRombelDto } from './dto/update-kategori-rombel.dto';
 
 @Injectable()
 export class RombelRepository {
@@ -68,5 +69,12 @@ export class RombelRepository {
         // check kategori rombel exist
         await this.checkKategoriRombelExistByKode(dto.kode);
         return await this.rombelQuery.createKategoriRombel(dto)
+    }
+
+    async updateKategoriRombel(id: string, dto: UpdatKategoriRombelDto) {
+        // check kategori rombel exist
+        const kategori = await this.findKategoriRombelOrThrowById(id);
+        if (dto.kode && dto.kode !== kategori.kode) await this.checkKategoriRombelExistByKode(dto.kode);
+        return await this.rombelQuery.updateKategoriRombel(id, dto)
     }
 }

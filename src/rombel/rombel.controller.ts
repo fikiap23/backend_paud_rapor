@@ -18,6 +18,7 @@ import { CreateRombelDto } from './dto/create-rombel.dto';
 import { RombelService } from './rombel.service';
 import { HttpHelper } from '../helpers/http-helper';
 import { CreateKategoriRombelDto } from './dto/create-kategori-rombel.dto';
+import { UpdatKategoriRombelDto } from './dto/update-kategori-rombel.dto';
 
 
 @Controller('rombel')
@@ -51,5 +52,13 @@ export class RombelController {
     async createKategori(@Body() dto: CreateKategoriRombelDto, @Res() res) {
         const result = await this.rombelService.createKategoriRombel(dto);
         return this.httpHelper.formatResponse(res, HttpStatus.CREATED, result);
+    }
+
+    @Put('kategori/:id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async updateKategori(@Body() dto: UpdatKategoriRombelDto, @Param('id') id, @Res() res) {
+        const result = await this.rombelService.updateKategoriRombel(id, dto);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
     }
 }
