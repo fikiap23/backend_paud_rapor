@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MuridRepository } from './murid.repository';
 import CreateMuridDto from './dto/create-murid.dto';
 import { UpdateMuridDto } from './dto/update-murid.dto';
+import { RombelRepository } from '../rombel/rombel.repository';
 
 
 @Injectable()

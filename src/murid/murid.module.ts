@@ -8,6 +8,7 @@ import { MuridController } from './murid.controller';
 import { MuridService } from './murid.service';
 import { MuridRepository } from './murid.repository';
 import { MuridQuery } from '../prisma/queries/murid/murid.query';
+import { RombelModule } from '../rombel/rombel.module';
 
 
 @Module({
@@ -17,6 +18,7 @@ import { MuridQuery } from '../prisma/queries/murid/murid.query';
         MomentModule,
         ConfigModule,
         HelperModule,
+        RombelModule
     ],
     providers: [MuridService, MuridRepository, MuridQuery],
     controllers: [MuridController],
