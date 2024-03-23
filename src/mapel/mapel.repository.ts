@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { MapelQuery } from '../prisma/queries/mapel/mapel.query';
 import CreateMapelDto from './dto/create-mapel.dto';
+import { UpdateMapelDto } from './dto/update-mapel.dto';
 
 @Injectable()
 export class MapelRepository {
@@ -29,6 +30,21 @@ export class MapelRepository {
             await this.checkMapelNameExist(dto.name);
             const dataMapel = await this.mapelQuery.create(dto);
             if (!dataMapel) throw new BadRequestException('Mapel gagal ditambahkan');
+            return dataMapel
+        }
+        catch (error) {
+            throw error
+        }
+    }
+
+    async update(id: string, dto: UpdateMapelDto) {
+        try {
+            // check mapel exist
+            const mapel = await this.findByIdOrThrow(id);
+            // check mapel name exist
+            if (dto.name && dto.name !== mapel.name) await this.checkMapelNameExist(dto.name)
+            const dataMapel = await this.mapelQuery.updateById(id, dto);
+            if (!dataMapel) throw new BadRequestException('Mapel gagal diupdate');
             return dataMapel
         }
         catch (error) {

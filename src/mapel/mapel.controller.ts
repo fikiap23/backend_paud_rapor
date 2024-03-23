@@ -17,6 +17,7 @@ import { Role } from '@prisma/client';
 import CreateMapelDto from './dto/create-mapel.dto';
 import { MapelService } from './mapel.service';
 import { HttpHelper } from '../helpers/http-helper';
+import { UpdateMapelDto } from './dto/update-mapel.dto';
 
 
 @Controller('mapel')
@@ -29,5 +30,13 @@ export class MapelController {
     async create(@Body() dto: CreateMapelDto, @Res() res) {
         const result = await this.mapelService.create(dto);
         return this.httpHelper.formatResponse(res, HttpStatus.CREATED, result);
+    }
+
+    @Put(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async update(@Body() dto: UpdateMapelDto, @Res() res, @Param('id') id) {
+        await this.mapelService.update(id, dto);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, {});
     }
 }

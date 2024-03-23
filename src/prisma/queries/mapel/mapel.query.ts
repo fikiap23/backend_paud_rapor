@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from '../../db.service';
 import CreateMapelDto from '../../../mapel/dto/create-mapel.dto';
+import { UpdateMapelDto } from '../../../mapel/dto/update-mapel.dto';
 
 @Injectable()
 export class MapelQuery extends DbService {
@@ -20,6 +21,10 @@ export class MapelQuery extends DbService {
 
     async create(payload: CreateMapelDto) {
         return await this.prisma.mapel.create({ data: payload })
+    }
+
+    async updateById(id: string, payload: UpdateMapelDto) {
+        return await this.prisma.mapel.update({ where: { id }, data: payload })
     }
 
 }
