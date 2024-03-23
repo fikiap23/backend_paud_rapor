@@ -16,6 +16,10 @@ export class RombelService {
         return await this.rombelRepository.findAllRombel()
     }
 
+    async findOneRombel(id: string) {
+        return await this.rombelRepository.findRombelByIdOrThrow(id)
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Kategori Rombel Service
@@ -27,5 +31,13 @@ export class RombelService {
 
     async updateKategoriRombel(id: string, dto: UpdatKategoriRombelDto) {
         return await this.rombelRepository.updateKategoriRombel(id, dto)
+    }
+
+    async findAllKategoriRombel() {
+        return await this.rombelRepository.findAllKategoriRombel()
+    }
+
+    async findOneKategoriRombel(id: string) {
+        return await this.rombelRepository.findKategoriRombelOrThrowById(id)
     }
 }

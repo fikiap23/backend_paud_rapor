@@ -30,6 +30,10 @@ export class RombelQuery extends DbService {
         })
     }
 
+    async findRombelById(id: string) {
+        return await this.prisma.rombel.findUnique({ where: { id } })
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Kategori Rombel Query
@@ -50,5 +54,9 @@ export class RombelQuery extends DbService {
 
     async updateKategoriRombel(id: string, payload: UpdatKategoriRombelDto) {
         return await this.prisma.kategoriRombel.update({ where: { id }, data: payload })
+    }
+
+    async findAllKategoriRombel() {
+        return await this.prisma.kategoriRombel.findMany()
     }
 }

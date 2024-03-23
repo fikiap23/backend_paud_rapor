@@ -25,6 +25,12 @@ export class RombelRepository {
         return await this.rombelQuery.findAllRombel()
     }
 
+    async findRombelByIdOrThrow(id: string) {
+        const rombel = await this.rombelQuery.findRombelById(id);
+        if (!rombel) throw new BadRequestException('Rombel tidak ditemukan');
+        return rombel
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Kategori Rombel FUNCTIONS
@@ -66,5 +72,9 @@ export class RombelRepository {
         const kategori = await this.findKategoriRombelOrThrowById(id);
         if (dto.kode && dto.kode !== kategori.kode) await this.checkKategoriRombelExistByKode(dto.kode);
         return await this.rombelQuery.updateKategoriRombel(id, dto)
+    }
+
+    async findAllKategoriRombel() {
+        return await this.rombelQuery.findAllKategoriRombel()
     }
 }
