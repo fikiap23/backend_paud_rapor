@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JadwalAjarRepository } from './jadwal-ajar.repository';
 import { CreateJadwalAjarDto } from './dto/create-jadwal-ajar.dto';
+import { UpdateJadwalAjarDto } from './dto/update-jadwal-ajar.dto';
 
 @Injectable()
 export class JadwalAjarService {
@@ -20,5 +21,9 @@ export class JadwalAjarService {
 
     async createJadwalAjar(token: string, dto: CreateJadwalAjarDto) {
         return await this.jadwalAjarRepository.createJadwalAjar(token, dto);
+    }
+
+    async updateById(token: string, id: string, dto: UpdateJadwalAjarDto) {
+        return await this.jadwalAjarRepository.updateById(token, id, dto);
     }
 }

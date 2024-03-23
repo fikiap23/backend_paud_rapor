@@ -5,6 +5,7 @@ import { CreateJadwalAjarDto } from './dto/create-jadwal-ajar.dto';
 import { HariType } from '@prisma/client';
 import { AuthRepository } from '../auth/auth.repository';
 import { PayloadToken } from '../auth/type';
+import { UpdateJadwalAjarDto } from './dto/update-jadwal-ajar.dto';
 
 @Injectable()
 export class JadwalAjarRepository {
@@ -43,5 +44,18 @@ export class JadwalAjarRepository {
         // check hari exist
         await this.checkIsHariHasUsed(dto.idModulAjar, dto.hari);
         return await this.jadwalAjarQuery.create(idsRombel[0], dto);
+    }
+
+    async updateById(token: string, id: string, dto: UpdateJadwalAjarDto) {
+        const jadwalAjar = await this.findByIdOrThrow(id);
+
+        // get decode payload jwt token
+        const { idsRombel } = (await this.authRepository.decodeJwtToken(token)) as PayloadToken;
+
+        // check module ajar is exist
+        if (dto.idModulAjar && dto.idModulAjar !== jadwalAjar.idModulAjar) await this.modulAjarRepository.findByIdAndRombelOrThrow(dto.idModulAjar, idsRombel[0]);
+
+        if (dto.hari && dto.hari !== jadwalAjar.hari) await this.checkIsHariHasUsed(dto.idModulAjar, dto.hari);
+        return await this.jadwalAjarQuery.updateById(id, dto);
     }
 }
