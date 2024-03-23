@@ -57,4 +57,8 @@ export class MuridRepository {
         return await this.muridQuery.deleteById(murid.id)
     }
 
+    async findAll() {
+        return await this.muridQuery.findAll()
+    }
+
 }

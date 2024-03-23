@@ -19,4 +19,12 @@ export class MuridService {
     async deleteById(id: string) {
         return await this.muridRepository.deleteById(id);
     }
+
+    async findAll() {
+        return await this.muridRepository.findAll();
+    }
+
+    async findOne(id: string) {
+        return await this.muridRepository.findByIdOrThrow(id);
+    }
 }

@@ -47,4 +47,16 @@ export class MuridController {
         await this.muridService.deleteById(id);
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {});
     }
+
+    @Get()
+    async findAll(@Res() res) {
+        const result = await this.muridService.findAll();
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
+    @Get(':id')
+    async findOne(@Res() res, @Param('id') id) {
+        const result = await this.muridService.findOne(id);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
 }
