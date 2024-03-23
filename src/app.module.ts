@@ -6,10 +6,11 @@ import { GuruModule } from './guru/guru.module';
 import { UserModule } from './user/user.module';
 import { RombelModule } from './rombel/rombel.module';
 import { MuridModule } from './murid/murid.module';
+import { MapelModule } from './mapel/mapel.module';
 
 
 @Module({
-  imports: [AuthModule, PrismaModule, GuruModule, UserModule, RombelModule, MuridModule],
+  imports: [AuthModule, PrismaModule, GuruModule, UserModule, RombelModule, MuridModule, MapelModule],
   controllers: [],
   providers: [],
 })

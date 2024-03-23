@@ -175,24 +175,24 @@ model ModulAjar {
   tujuanKegiatan      String[]
   alatBahan           String[]
   petaKonsep          String[]
-  mapel               Mapel[]
   jadwalAjar          JadwalAjar[]
   penilaianMingguan   PenilaianMingguan[]
   guruOnModulAjar     GuruOnModulAjar[]
+
+  // Relation
+  idMapel String
+  mapel   Mapel  @relation(fields: [idMapel], references: [id])
 
   // index
   @@index([id, minggu])
 }
 
 model Mapel {
-  id        String  @id @default(uuid())
+  id        String      @id @default(uuid())
   name      String
   deskripsi String
-  isAktif   Boolean
-
-  // Relation
-  idModulAjar String
-  modulAjar   ModulAjar @relation(fields: [idModulAjar], references: [id])
+  isAktif   Boolean     @default(true)
+  modulAjar ModulAjar[]
 
   // index
   @@index([id, name])
