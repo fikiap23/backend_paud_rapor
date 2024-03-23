@@ -98,8 +98,8 @@ model Murid {
   nis               String              @unique
   nama              String
   jenisKelamin      JenisKelamin
-  tempatLahir       String
-  tanggalLahir      DateTime
+  tempatLahir       String?
+  tanggalLahir      DateTime?
   agama             Agama?
   alamat            String?
   tanggalMasuk      DateTime?
