@@ -51,4 +51,17 @@ export class MapelRepository {
             throw error
         }
     }
+
+    async delete(id: string) {
+        try {
+            // check mapel exist
+            await this.findByIdOrThrow(id);
+            const dataMapel = await this.mapelQuery.deleteById(id);
+            if (!dataMapel) throw new BadRequestException('Mapel gagal dihapus');
+            return dataMapel
+        }
+        catch (error) {
+            throw error
+        }
+    }
 }

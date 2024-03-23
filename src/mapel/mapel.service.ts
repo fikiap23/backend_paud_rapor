@@ -14,4 +14,8 @@ export class MapelService {
     async update(id: string, dto: UpdateMapelDto) {
         return await this.mapelRepository.update(id, dto)
     }
+
+    async delete(id: string) {
+        return await this.mapelRepository.delete(id)
+    }
 }

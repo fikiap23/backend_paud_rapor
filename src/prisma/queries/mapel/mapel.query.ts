@@ -27,4 +27,8 @@ export class MapelQuery extends DbService {
         return await this.prisma.mapel.update({ where: { id }, data: payload })
     }
 
+    async deleteById(id: string) {
+        return await this.prisma.mapel.delete({ where: { id } })
+    }
+
 }
