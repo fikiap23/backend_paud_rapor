@@ -47,4 +47,20 @@ export class ModulAjarController {
         await this.modulAjarService.deleteModulAjar(req.headers.authorization, id)
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
     }
+
+    @Get()
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async findAll(@Res() res) {
+        const result = await this.modulAjarService.findAllModulAjar();
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
+    @Get(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async findOne(@Res() res, @Param('id') id) {
+        const result = await this.modulAjarService.findByIdOrThrow(id);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
 }

@@ -18,4 +18,12 @@ export class ModulAjarService {
     async deleteModulAjar(token: string, id: string) {
         return await this.modulAjarRepository.delete(token, id)
     }
+
+    async findAllModulAjar() {
+        return await this.modulAjarRepository.findAllModulAjar()
+    }
+
+    async findByIdOrThrow(id: string) {
+        return await this.modulAjarRepository.findByIdOrThrow(id)
+    }
 }
