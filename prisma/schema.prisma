@@ -82,7 +82,7 @@ model Guru {
 
   // Relation
   idUser          String            @unique
-  user            User              @relation(fields: [idUser], references: [id])
+  user            User              @relation(fields: [idUser], references: [id], onDelete: Cascade)
   rombel          Rombel[]
   rapor           Rapor[]
   guruOnModulAjar GuruOnModulAjar[]

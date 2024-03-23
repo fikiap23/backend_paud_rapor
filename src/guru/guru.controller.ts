@@ -32,6 +32,14 @@ export class GuruController {
         return this.httpHelper.formatResponse(res, HttpStatus.CREATED, result);
     }
 
+    @Put('bypass/status/:id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN)
+    async updateStatusByAdmin(@Param('id') id: string, @Body() dto: CreateGuruDto, @Res() res) {
+        const result = await this.guruService.updateByAdmin(id, dto);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
     @Put('bypass/:id')
     @UseGuards(JwtGuard, RoleGuard)
     @Roles(Role.ADMIN)
