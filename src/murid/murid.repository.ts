@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { MuridQuery } from '../prisma/queries/murid/murid.query';
 import CreateMuridDto from './dto/create-murid.dto';
+import { UpdateMuridDto } from './dto/update-murid.dto';
 
 
 @Injectable()
@@ -10,7 +11,7 @@ export class MuridRepository {
     async findByIdOrThrow(id: string) {
         const murid = await this.muridQuery.findById(id);
         if (!murid) {
-            throw new Error('Anak belum terdaftar');
+            throw new BadRequestException('Anak belum terdaftar');
         }
         return murid;
     }
@@ -18,7 +19,7 @@ export class MuridRepository {
     async findByNisOrThrow(nis: string) {
         const murid = await this.muridQuery.findByNis(nis);
         if (!murid) {
-            throw new Error('Anak belum terdaftar');
+            throw new BadRequestException('Anak belum terdaftar');
         }
         return murid;
     }
@@ -26,7 +27,7 @@ export class MuridRepository {
     async findByNisnOrThrow(nisn: string) {
         const murid = await this.muridQuery.findByNisn(nisn);
         if (!murid) {
-            throw new Error('Anak belum terdaftar');
+            throw new BadRequestException('Anak belum terdaftar');
         }
         return murid;
     }
@@ -40,7 +41,15 @@ export class MuridRepository {
     async create(dto: CreateMuridDto) {
         // check is nis or nisn has used
         await this.isNisOrNisnHasUsed(dto.nis, dto.nisn);
-
         return await this.muridQuery.create(dto);
     }
+
+    async updateById(id: string, dto: UpdateMuridDto) {
+        const murid = await this.findByIdOrThrow(id);
+        if (murid.nis !== dto.nis || murid.nisn !== dto.nisn) {
+            await this.isNisOrNisnHasUsed(dto.nis, dto.nisn);
+        }
+        return await this.muridQuery.updateById(id, dto)
+    }
+
 }

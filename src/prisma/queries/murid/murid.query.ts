@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from '../../db.service';
 import CreateMuridDto from '../../../murid/dto/create-murid.dto';
+import { UpdateMuridDto } from '../../../murid/dto/update-murid.dto';
 
 
 
@@ -42,5 +43,14 @@ export class MuridQuery extends DbService {
 
     async create(data: CreateMuridDto) {
         return await this.prisma.murid.create({ data })
+    }
+
+    async updateById(id: string, data: UpdateMuridDto) {
+        return await this.prisma.murid.update({
+            where: {
+                id
+            },
+            data
+        })
     }
 }
