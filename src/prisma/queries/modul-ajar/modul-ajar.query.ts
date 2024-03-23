@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from '../../db.service';
 import CreateModulAjarDto from '../../../modul-ajar/dto/create-modul-ajar.dto';
+import { UpdateModulAjarDto } from '../../../modul-ajar/dto/update-modul-ajar.dto';
 
 @Injectable()
 export class ModulAjarQuery extends DbService {
@@ -19,5 +20,9 @@ export class ModulAjarQuery extends DbService {
 
     async create(idRombel: string, payload: CreateModulAjarDto) {
         return await this.prisma.modulAjar.create({ data: { ...payload, idRombel } })
+    }
+
+    async updateById(id: string, payload: UpdateModulAjarDto) {
+        return await this.prisma.modulAjar.update({ where: { id }, data: payload })
     }
 }

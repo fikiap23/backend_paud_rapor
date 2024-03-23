@@ -4,6 +4,7 @@ import { AuthRepository } from '../auth/auth.repository';
 import { PayloadToken } from '../auth/type';
 import CreateModulAjarDto from './dto/create-modul-ajar.dto';
 import { MapelRepository } from '../mapel/mapel.repository';
+import { UpdateModulAjarDto } from './dto/update-modul-ajar.dto';
 
 @Injectable()
 export class ModulAjarRepository {
@@ -38,6 +39,23 @@ export class ModulAjarRepository {
         await this.checkIsMingguHasUsed(dto.minggu, dto.idMapel, idsRombel[0]);
         const modulAjar = await this.modulAjarQuery.create(idsRombel[0], dto);
         if (!modulAjar) throw new BadRequestException('Modul Ajar gagal ditambahkan');
+        return modulAjar
+    }
+
+    async updateById(token: string, id: string, dto: UpdateModulAjarDto) {
+        // check modul ajar is exist
+        const currModulAjar = await this.findByIdOrThrow(id);
+
+        // check mapel is exist
+        if (dto.idMapel && dto.idMapel !== currModulAjar.idMapel) await this.mapelRepository.findByIdOrThrow(dto.idMapel);
+
+        // get decode payload jwt token
+        const { idsRombel } = (await this.authRepository.decodeJwtToken(token)) as PayloadToken;
+        if (dto.minggu && dto.minggu !== currModulAjar.minggu || dto.idMapel !== currModulAjar.idMapel) await this.checkIsMingguHasUsed(dto.minggu, dto.idMapel, idsRombel[0]);
+
+        // update modul ajar
+        const modulAjar = await this.modulAjarQuery.updateById(id, dto);
+        if (!modulAjar) throw new BadRequestException('Modul Ajar gagal diupdate');
         return modulAjar
     }
 }

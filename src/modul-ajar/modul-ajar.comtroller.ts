@@ -31,4 +31,12 @@ export class ModulAjarController {
         const result = await this.modulAjarService.createModulAjar(req.headers.authorization, dto)
         return this.httpHelper.formatResponse(res, HttpStatus.CREATED, result)
     }
+
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.GURU)
+    @Put(':id')
+    async update(@Body() dto: CreateModulAjarDto, @Res() res, @Request() req, @Param('id') id) {
+        await this.modulAjarService.updateModulAjar(req.headers.authorization, id, dto)
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
+    }
 }
