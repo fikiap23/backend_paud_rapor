@@ -1,5 +1,5 @@
 import { Nilai } from '@prisma/client';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreatePenilaianMingguanDto {
     @IsEnum(Nilai)
@@ -17,8 +17,4 @@ export class CreatePenilaianMingguanDto {
     @IsString()
     @IsNotEmpty()
     idMurid: string;
-
-    @IsString()
-    @IsNotEmpty()
-    idMapel: string;
 }

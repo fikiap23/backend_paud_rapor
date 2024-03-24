@@ -9,6 +9,7 @@ import { MuridModule } from './murid/murid.module';
 import { MapelModule } from './mapel/mapel.module';
 import { ModulAjarModule } from './modul-ajar/modul-ajar.module';
 import { JadwalAjarModule } from './jadwal-ajar/jadwal-ajar.module';
+import { NilaiMingguanModule } from './nilai-mingguan/nilai-mingguan.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JadwalAjarModule } from './jadwal-ajar/jadwal-ajar.module';
     MapelModule,
     ModulAjarModule,
     JadwalAjarModule,
+    NilaiMingguanModule
   ],
   controllers: [],
   providers: [],

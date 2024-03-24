@@ -189,12 +189,11 @@ model ModulAjar {
 }
 
 model Mapel {
-  id                String              @id @default(uuid())
-  name              String
-  deskripsi         String
-  isAktif           Boolean             @default(true)
-  modulAjar         ModulAjar[]
-  penilaianMingguan PenilaianMingguan[]
+  id        String      @id @default(uuid())
+  name      String
+  deskripsi String
+  isAktif   Boolean     @default(true)
+  modulAjar ModulAjar[]
 
   // index
   @@index([id, name])
@@ -226,11 +225,9 @@ model PenilaianMingguan {
   modulAjar   ModulAjar @relation(fields: [idModulAjar], references: [id], onDelete: Cascade)
   idMurid     String
   murid       Murid     @relation(fields: [idMurid], references: [id], onDelete: Cascade)
-  idMapel     String
-  mapel       Mapel     @relation(fields: [idMapel], references: [id])
 
   // index
-  @@index([id, idModulAjar, idMurid, idMapel])
+  @@index([id, idModulAjar, idMurid])
 }
 
 model Semester {
