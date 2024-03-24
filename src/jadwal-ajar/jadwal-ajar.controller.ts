@@ -51,4 +51,28 @@ export class JadwalAjarController {
         await this.jadwalAjarService.deleteById(req.headers.authorization, id)
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
     }
+
+    @Get()
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async findAll(@Res() res) {
+        const result = await this.jadwalAjarService.findAll();
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
+    @Get('modul-ajar/:idModulAjar')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async findManyByModul(@Res() res, @Param('idModulAjar') idModulAjar) {
+        const result = await this.jadwalAjarService.findByIdModulAjar(idModulAjar);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
+
+    @Get(':id')
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.ADMIN, Role.GURU)
+    async findOne(@Res() res, @Param('id') id) {
+        const result = await this.jadwalAjarService.findByIdOrThrow(id);
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, result);
+    }
 }
