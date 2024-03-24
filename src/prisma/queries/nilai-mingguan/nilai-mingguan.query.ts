@@ -22,11 +22,19 @@ export class NilaiMingguanQuery extends DbService {
         return await this.prisma.penilaianMingguan.findUnique({ where: { id }, select: { modulAjar: true } })
     }
 
+    async findByIdMurid(id: string) {
+        return await this.prisma.penilaianMingguan.findMany({ where: { idMurid: id } })
+    }
+
     async create(payload: CreatePenilaianMingguanDto) {
         return await this.prisma.penilaianMingguan.create({ data: payload })
     }
 
     async updateById(id: string, payload: UpdatePenilaianMingguanDto) {
         return await this.prisma.penilaianMingguan.update({ where: { id }, data: payload })
+    }
+
+    async deleteById(id: string) {
+        return await this.prisma.penilaianMingguan.delete({ where: { id } })
     }
 }

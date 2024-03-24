@@ -57,4 +57,12 @@ export class NilaiMingguanRepository {
         if (nilaiMingguan.modulAjar.idRombel !== idsRombel[0]) throw new BadRequestException('Akun tidak terdaftar di rombel ini');
         return await this.nilaiMingguanQuery.updateById(id, dto)
     }
+
+    async deleteById(token: string, id: string) {
+        // get decode payload jwt token
+        const { idsRombel } = (await this.authRepository.decodeJwtToken(token)) as PayloadToken;
+        const nilaiMingguan = await this.findByIdWithModulAjarOrThrow(id);
+        if (nilaiMingguan.modulAjar.idRombel !== idsRombel[0]) throw new BadRequestException('Akun tidak terdaftar di rombel ini');
+        return await this.nilaiMingguanQuery.deleteById(id)
+    }
 }

@@ -43,4 +43,13 @@ export class NilaiMingguanController {
         const result = await this.nilaiMingguanService.updateById(req.headers.authorization, id, dto)
         return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
     }
+
+    @UseGuards(JwtGuard, RoleGuard)
+    @Roles(Role.GURU)
+    @Delete(':id')
+    async delete(@Res() res, @Request() req, @Param('id') id) {
+        await this.nilaiMingguanService.deleteById(req.headers.authorization, id)
+        return this.httpHelper.formatResponse(res, HttpStatus.OK, {})
+    }
+
 }

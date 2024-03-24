@@ -22,4 +22,8 @@ export class NilaiMingguanService {
     async updateById(token: string, id: string, dto: UpdatePenilaianMingguanDto) {
         return await this.nilaiMingguanRepository.updateById(token, id, dto);
     }
+
+    async deleteById(token: string, id: string) {
+        return await this.nilaiMingguanRepository.deleteById(token, id);
+    }
 }
