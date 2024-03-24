@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SemesterRepository } from './semester.repository';
 import { CreateSemesterDto } from './dto/create-semester.dto';
+import { UpdateSemesterDto } from './dto/update-semester.dto';
 
 @Injectable()
 export class SemesterService {
@@ -16,5 +17,13 @@ export class SemesterService {
 
     async create(payload: CreateSemesterDto) {
         return await this.semesterRepository.create(payload);
+    }
+
+    async updateById(id: string, dto: UpdateSemesterDto) {
+        return await this.semesterRepository.updateById(id, dto);
+    }
+
+    async deleteById(id: string) {
+        return await this.semesterRepository.deleteById(id);
     }
 }
