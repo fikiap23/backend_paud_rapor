@@ -231,14 +231,16 @@ model PenilaianMingguan {
 }
 
 model Semester {
-  id            String       @id @default(uuid())
-  jenisSemester SemesterType
-  tahunAjaran   Int
-  tglRapor      DateTime
-  rapor         Rapor[]
+  id               String       @id @default(uuid())
+  jenisSemester    SemesterType
+  tahunAjaranAwal  Int
+  tahunAjaranAkhir Int
+  isAktif          Boolean      @default(false)
+  tglBagiRapor     DateTime
+  rapor            Rapor[]
 
   // index
-  @@index([id, tahunAjaran])
+  @@index([id])
 }
 
 model Rapor {
