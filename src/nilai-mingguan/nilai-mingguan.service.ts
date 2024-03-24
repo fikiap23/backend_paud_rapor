@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { NilaiMingguanRepository } from './nilai-mingguan.repository';
 import { CreatePenilaianMingguanDto } from './dto/create-nilai-mingguan.dto';
+import { UpdatePenilaianMingguanDto } from './dto/update-nilai-mingguan.dto';
 
 @Injectable()
 export class NilaiMingguanService {
@@ -16,5 +17,9 @@ export class NilaiMingguanService {
 
     async create(token: string, dto: CreatePenilaianMingguanDto) {
         return await this.nilaiMingguanRepository.create(token, dto);
+    }
+
+    async updateById(token: string, id: string, dto: UpdatePenilaianMingguanDto) {
+        return await this.nilaiMingguanRepository.updateById(token, id, dto);
     }
 }
